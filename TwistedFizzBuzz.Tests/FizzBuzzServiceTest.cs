@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using JetBrains.Annotations;
 using Xunit;
@@ -9,15 +10,18 @@ namespace TwistedFizzBuzz.Tests;
 [TestSubject(typeof(FizzBuzzService))]
 public class FizzBuzzServiceTest
 {
-
     private readonly IFizzBuzzService fizzBuzzService = new FizzBuzzService();
 
     [Fact]
     public void Throws_ArgumentException_minParameter_Greater_Than_maxParameter()
     {
-        var exception = Assert.Throws<ArgumentException>(() => fizzBuzzService.CalculateFizzBuzz(100, 1));
-        
-        Assert.NotNull(exception);
+        var exception = Record.Exception(() =>
+        {
+            var result = fizzBuzzService.CalculateFizzBuzz(100, 1);
+            var first = result.First();
+            return result;
+        });
+        Assert.IsType<ArgumentException>(exception);
     }
 
     [Fact]

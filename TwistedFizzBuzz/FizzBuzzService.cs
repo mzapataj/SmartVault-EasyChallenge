@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Runtime.Versioning;
-
-namespace TwistedFizzBuzz;
+﻿namespace TwistedFizzBuzz;
 
 
 public interface IFizzBuzzService
@@ -24,30 +21,16 @@ public class FizzBuzzService : IFizzBuzzService
         
         altTokens ??= defaultTokens;
         
-        var resulList = new List<string>();
-        
         for (var i = minRange; i <= maxRange; i++)
-        {
-            var item = GetFizzBuzz(i, altTokens);
-            resulList.Add(item);
-        }
-
-        return resulList;
+            yield return GetFizzBuzz(i, altTokens);
     }
 
     public IEnumerable<string> CalculateFizzBuzz(IEnumerable<long> inputArray, Dictionary<long, string>? altTokens = null)
     {
         altTokens ??= defaultTokens;
         
-        var resulList = new List<string>();
-
         foreach (var i in inputArray)
-        {
-            var item = GetFizzBuzz(i, altTokens);
-            resulList.Add(item);
-        }
-
-        return resulList;
+            yield return GetFizzBuzz(i, altTokens);
     }
     
     
